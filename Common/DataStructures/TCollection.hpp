@@ -12,8 +12,6 @@
 template<typename T>
 class TCollection {
 public:
-    virtual ~TCollection() = default;
-
     int GetSize() const;        // Get how many elements are in collection
     bool IsEmpty() const;       // Check to see if the collection is empty
     virtual void Clear() = 0;   // To be overridden by classes inheriting from it
@@ -22,12 +20,12 @@ protected:
 };
 
 template<typename T>
-inline int TCollection<T>::GetSize() const {
+int TCollection<T>::GetSize() const {
     return size;
 }
 
 template<typename T>
-inline bool TCollection<T>::IsEmpty() const {
+bool TCollection<T>::IsEmpty() const {
     if (size == 0) return true;
     return false;
 }

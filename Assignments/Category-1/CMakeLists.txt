@@ -8,6 +8,8 @@ add_executable(Category-1
         Option-2/Classes/TSong.cpp
         Option-2/Classes/TSong.h
         Option-2/Classes/EMusicGenreType.h
+        Option-2/Classes/TMenu.cpp
+        Option-2/Classes/TMenu.h
 )
 
 # Conditionally add the correct source file
