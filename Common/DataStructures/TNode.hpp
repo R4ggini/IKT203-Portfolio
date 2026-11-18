@@ -6,6 +6,8 @@
 */
 
 // This is a node for a doubly linked list
+#pragma once
+
 template<typename T>
 class TNode {
 public:
@@ -32,11 +34,9 @@ template<typename T>
 TNode<T>::TNode(T* data, TNode* prev, TNode* next)
     : data(data), prev(prev), next(next) {}
 
-// Destructor that does nothing :)
+// Destructor that does nothing special
 template<typename T>
-TNode<T>::~TNode() {
-
-}
+TNode<T>::~TNode() {}
 
 
 template<typename T>

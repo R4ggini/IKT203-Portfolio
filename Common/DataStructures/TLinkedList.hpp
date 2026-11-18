@@ -17,16 +17,18 @@
 */
 
 template<typename T>
-class TLinkedList {
+class TLinkedList : public TCollection<T> {
 public:
-    TLinkedList(bool ownsData);
+    TLinkedList(bool isOwner);
     ~TLinkedList();
 
-    TLinkedList* GetHead();
-    TLinkedList* GetTail();
+    TNode<T>* GetHead();
+    TNode<T>* GetTail();
 
     void Append(T* data);       // Creates new node with the data at the back of the list
     void Prepend(T* data);      // Creates new node with the data at the front of the list
+
+    void Clear() override;      // Removes every element in linked list
 private:
     TNode<T>* head;             // Pointer to front of list
     TNode<T>* tail;             // Pointer to back of list
@@ -35,11 +37,11 @@ private:
 
 // Constructor that creates a list of a front and back dummy node
 template<typename T>
-TLinkedList<T>::TLinkedList(const bool ownsData) : isOwner(ownsData) {
+TLinkedList<T>::TLinkedList(const bool isOwner) : isOwner(isOwner) {
     // Creates dummy nodes at front and back and links them
     head = new TNode<T>(nullptr, nullptr, nullptr);
     tail = new TNode<T>(nullptr, head, nullptr);
-    head->next = tail;
+    head->SetNext(tail);
 }
 
 // Destructor iterates through every node in the list and deletes them. Will only delete data if ownsData is true.
@@ -56,17 +58,20 @@ TLinkedList<T>::~TLinkedList() {
 }
 
 template<typename T>
-TLinkedList<T> *TLinkedList<T>::GetHead() {
+TNode<T> *TLinkedList<T>::GetHead() {
     return head;
 }
 
 template<typename T>
-TLinkedList<T>* TLinkedList<T>::GetTail() {
+TNode<T>* TLinkedList<T>::GetTail() {
     return tail;
 }
 
 template<typename T>
 void TLinkedList<T>::Append(T* data) {
+    // Keeps size consistent
+    ++this->size;
+
     // Creates new node with correct pointers
     TNode<T>* newNode = new TNode<T>(data, tail->GetPrev(), tail);
 
@@ -77,11 +82,32 @@ void TLinkedList<T>::Append(T* data) {
 
 template<typename T>
 void TLinkedList<T>::Prepend(T* data) {
+    // Keep size consistent
+    ++this->size;
+
     // Creates new node with correct pointers
     TNode<T>* newNode = new TNode<T>(data, head, head->GetNext());
 
     // Updates pointers of adjacent nodes
     head->SetNext(newNode); // Sets pointer of previous node (head)
     newNode->GetNext()->SetPrev(newNode); // Sets pointer of next node
+}
+
+// Removes every node in a list except for dummy nodes
+template<typename T>
+void TLinkedList<T>::Clear() {
+    TNode<T>* current = head->GetNext();
+
+    while (current != tail) { // Same logic as destructor, but stops before deleting the tail node
+        TNode<T> *next = current->GetNext();        // Points to next node in list to keep track
+        if (isOwner) delete current->GetData();    // Deletes data if list owns it
+        delete current;                             // Deletes node
+        current = next;                             // Iterates the node to be deleted
+    }
+
+    // Correct pointers and size
+    head->SetNext(tail);
+    tail->SetPrev(head);
+    this->size = 0;
 }
 

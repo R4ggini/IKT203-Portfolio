@@ -5,6 +5,9 @@ add_executable(Category-1
     
     
     main.cpp
+        Option-2/Classes/TSong.cpp
+        Option-2/Classes/TSong.h
+        Option-2/Classes/EMusicGenreType.h
 )
 
 # Conditionally add the correct source file
