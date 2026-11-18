@@ -12,6 +12,15 @@ public:
     TNode(T* data, TNode* prev, TNode* next);
     ~TNode();
 
+    void SetData(T* data);          // Sets data as input pointer
+    T* GetData();                   // Returns a pointer to the data
+
+    void SetPrev(TNode* prev);      // Sets previous as input pointer
+    TNode* GetPrev();               // Returns pointer to previous node
+
+    void SetNext(TNode* next);      // Sets next as input pointer
+    TNode* GetNext();               // Returns pointer to next node
+
 private:
     T* data;
     TNode* prev;
@@ -23,6 +32,29 @@ template<typename T>
 TNode<T>::TNode(T* data, TNode* prev, TNode* next)
     : data(data), prev(prev), next(next) {}
 
-// Constructor that does nothing :)
+// Destructor that does nothing :)
 template<typename T>
-TNode<T>::~TNode() {}
+TNode<T>::~TNode() {
+
+}
+
+
+template<typename T>
+void TNode<T>::SetData(T* data) {this->data = data;}
+
+template<typename T>
+T* TNode<T>::GetData() {return this->data;}
+
+
+template<typename T>
+void TNode<T>::SetPrev(TNode* prev) {this->prev = prev;}
+
+template<typename T>
+TNode<T>* TNode<T>::GetPrev() {return this->prev;}
+
+
+template<typename T>
+void TNode<T>::SetNext(TNode* next) {this->next = next;}
+
+template<typename T>
+TNode<T>* TNode<T>::GetNext() {return this->next;}
